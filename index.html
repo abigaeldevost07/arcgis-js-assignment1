@@ -24,23 +24,43 @@
 
     <script>
       require([
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/layers/GraphicsLayer",
-        "esri/widgets/Sketch",
-        "esri/widgets/Home"
-      ], function (Map, MapView, GraphicsLayer, Sketch, Home) {
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/GraphicsLayer",
+  "esri/widgets/Sketch",
+  "esri/widgets/Home",
+  "esri/widgets/Search",
+  "esri/widgets/BasemapToggle",
+  "esri/widgets/Measurement"
+], function (
+  Map,
+  MapView,
+  GraphicsLayer,
+  Sketch,
+  Home,
+  Search,
+  BasemapToggle,
+  Measurement
+) {
 
-        const map = new Map({
-          basemap: "streets-navigation-vector"
-        });
+        // Search widget
+const searchWidget = new Search({
+  view: view
+});
+view.ui.add(searchWidget, "top-left");
 
-        const view = new MapView({
-          container: "viewDiv",
-          map: map,
-          center: [-79.8711, 43.2557], // Hamilton, ON
-          zoom: 12
-        });
+// Basemap Toggle widget
+const basemapToggle = new BasemapToggle({
+  view: view,
+  nextBasemap: "satellite"
+});
+view.ui.add(basemapToggle, "bottom-right");
+
+// Measurement widget
+const measurementWidget = new Measurement({
+  view: view
+});
+view.ui.add(measurementWidget, "top-right");
 
         const graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
