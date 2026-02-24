@@ -23,59 +23,84 @@
     <div id="viewDiv"></div>
 
     <script>
-      require([
-  "esri/Map",
-  "esri/views/MapView",
-  "esri/layers/GraphicsLayer",
-  "esri/widgets/Sketch",
-  "esri/widgets/Home",
-  "esri/widgets/Search",
-  "esri/widgets/BasemapToggle",
-  "esri/widgets/Measurement"
-], function (
-  Map,
-  MapView,
-  GraphicsLayer,
-  Sketch,
-  Home,
-  Search,
-  BasemapToggle,
-  Measurement
-) {
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/GraphicsLayer",
+    "esri/widgets/Sketch",
+    "esri/widgets/Home",
+    "esri/widgets/Search",
+    "esri/widgets/BasemapToggle",
+    "esri/widgets/Measurement"
+  ], function (
+    Map,
+    MapView,
+    GraphicsLayer,
+    Sketch,
+    Home,
+    Search,
+    BasemapToggle,
+    Measurement
+  ) {
 
-        // Search widget
-const searchWidget = new Search({
-  view: view
-});
-view.ui.add(searchWidget, "top-left");
+    // 1. Create the map
+    const map = new Map({
+      basemap: "streets-navigation-vector"
+    });
 
-// Basemap Toggle widget
-const basemapToggle = new BasemapToggle({
-  view: view,
-  nextBasemap: "satellite"
-});
-view.ui.add(basemapToggle, "bottom-right");
+    // 2. Create the view (Québec City)
+    const view = new MapView({
+      container: "viewDiv",
+      map: map,
+      center: [-71.2080, 46.8139], // Québec City
+      zoom: 12
+    });
 
-// Measurement widget
-const measurementWidget = new Measurement({
-  view: view
-});
-view.ui.add(measurementWidget, "top-right");
+    // 3. Graphics layer for Sketch
+    const graphicsLayer = new GraphicsLayer();
+    map.add(graphicsLayer);
 
-        const graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+    // 4. Widgets
 
-        const sketch = new Sketch({
-          view: view,
-          layer: graphicsLayer
-        });
-        view.ui.add(sketch, "top-right");
+    // Home widget
+    const homeWidget = new Home({
+      view: view
+    });
+    view.ui.add(homeWidget, "top-left");
 
-        const homeWidget = new Home({
-          view: view
-        });
-        view.ui.add(homeWidget, "top-left");
-      });
-    </script>
+    // Search widget
+    const searchWidget = new Search({
+      view: view
+    });
+    view.ui.add(searchWidget, "top-left");
+
+    // Basemap Toggle widget
+    const basemapToggle = new BasemapToggle({
+      view: view,
+      nextBasemap: "satellite"
+    });
+    view.ui.add(basemapToggle, "bottom-right");
+
+    // Measurement widget
+    const measurementWidget = new Measurement({
+      view: view
+    });
+    view.ui.add(measurementWidget, "top-right");
+
+    // Sketch widget
+    const sketch = new Sketch({
+      view: view,
+      layer: graphicsLayer
+    });
+    view.ui.add(sketch, "top-right");
+
+  });
+</script>
+What you should see now (this is your checklist)
+
+On your GitHub Pages site:
+
+Top-left
   </body>
+
 </html>
